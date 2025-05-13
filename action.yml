@@ -326,6 +326,10 @@ runs:
             git diff --diff-filter=ACMRT --name-only ${git_previous_commit}..${{github.sha}} -- ${local_path_unslash} ':!/.git*' ${{inputs.sync-delta-excludes}} > ~/files_to_upload
             git diff-tree --diff-filter=D --name-only -t ${git_previous_commit}..${{github.sha}} -- ${local_path_unslash} ':!/.git*' ${{inputs.sync-delta-excludes}} > ~/files_to_delete
 
+            echo "Before filtering with regex"
+            cat ~/files_to_upload
+            cat ~/files_to_delete
+
             if [ -z "${{inputs.sync-delta-excludes-regex}}" ]; then
               # No regex provided, files are not modified, no filtering happens
               echo "No regex provided, files will not be filtered."
@@ -333,6 +337,10 @@ runs:
               grep -vE "${{inputs.sync-delta-excludes-regex}}" ~/files_to_upload > ~/files_to_upload
               grep -vE "${{inputs.sync-delta-excludes-regex}}" ~/files_to_delete > ~/files_to_delete
             fi
+
+            echo "After filtering with regex"
+            cat ~/files_to_upload
+            cat ~/files_to_delete
               
             sed --in-place --regexp-extended "s#(.*)#realpath --canonicalize-missing --relative-to=$local_path_unslash \1#e" ~/files_to_upload
             sed --in-place --regexp-extended "s#(.*)#realpath --canonicalize-missing --relative-to=$local_path_unslash \1#e" ~/files_to_delete

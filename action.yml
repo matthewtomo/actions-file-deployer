@@ -340,8 +340,8 @@ runs:
               # No regex provided, files are not modified, no filtering happens
               echo "No regex provided, files will not be filtered."
             else
-              grep -vE "$EXCLUDE_REGEX" ~/files_to_upload > ~/files_to_upload
-              grep -vE "$EXCLUDE_REGEX" ~/files_to_delete > ~/files_to_delete
+              grep -vP "$EXCLUDE_REGEX" ~/files_to_upload > ~/files_to_upload
+              grep -vP "$EXCLUDE_REGEX" ~/files_to_delete > ~/files_to_delete
             fi
   
             echo "After filtering with regex"

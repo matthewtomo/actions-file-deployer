@@ -333,6 +333,7 @@ runs:
             echo "qwerty2~~~~~~~~~~~~~~~~~~~~"
 
             EXCLUDE_REGEX="${{ inputs.sync-delta-excludes-regex }}"
+            echo "Raw regex: $EXCLUDE_REGEX"
 
             if [ -z "$EXCLUDE_REGEX" ]; then
               # No regex provided, files are not modified, no filtering happens

@@ -94,6 +94,8 @@ runs:
   steps:
     - name: "Deploy"
       shell: bash
+      env:
+          EXCLUDE_REGEX: ${{ inputs.sync-delta-excludes-regex }}
       run: |
         echo "::group::Initialization"
 
@@ -331,8 +333,7 @@ runs:
             cat ~/files_to_upload
             cat ~/files_to_delete
             echo "qwerty2~~~~~~~~~~~~~~~~~~~~"
-
-            EXCLUDE_REGEX="${{ inputs.sync-delta-excludes-regex }}"
+            
             echo "Raw regex: $EXCLUDE_REGEX"
 
             if [ -z "$EXCLUDE_REGEX" ]; then
